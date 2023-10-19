@@ -1,19 +1,37 @@
-import { Suspense } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Suspense, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { Container, LayoutWrapper, SuspenseWrapper, Wrapper } from "./SharedLayout.styled";
+import { SideBar } from "../components/SideBar/SideBar";
+import { Header } from "../components/Header/Header";
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { AnimatePresence } from "framer-motion";
 
 export const SharedLayout = () => {
+    const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+    const isDesktop = useMediaQuery('(min-width: 1440px)')
+    const closeSideBar = () => setIsOpenSideBar(false);
+
+    const openSideBar = () => setIsOpenSideBar(true);
+
+    useEffect(() => {
+        if (isDesktop) setIsOpenSideBar(true);
+    }, [isDesktop])
+
     return (
-        <>
-            <div>
-                <ul>
-                    <li><NavLink to={'/'}>Home</NavLink></li>
-                    <li><NavLink to={'/catalog'}>Catalog</NavLink></li>
-                    <li><NavLink to={'favorites'}>Favourite</NavLink></li>
-                </ul>
-            </div>
-            <Suspense>
-                <Outlet />
-            </Suspense>
-        </>
+        <Wrapper>
+            <LayoutWrapper>
+                <Container>
+                    {!isDesktop && <Header openMethod={openSideBar} />}
+                    <SuspenseWrapper>
+                        <AnimatePresence>
+                            {isOpenSideBar && <SideBar closeMethod={closeSideBar} />}
+                        </AnimatePresence>
+                        <Suspense>
+                            <Outlet />
+                        </Suspense>
+                    </SuspenseWrapper>
+                </Container>
+            </LayoutWrapper>
+        </Wrapper>
     )
 };

@@ -1,6 +1,6 @@
 export const theme = Object.freeze({
     mainBcg: '#FFFFFF',
-    decorativePuprle: '#3470FF',
+    decorativePurple: '#3470FF',
     decorativeWhite: 'rgba(255, 255, 255, 0.8)',
     decorativePurpleHover: '#0B44CD',
     mainText: '#121417',
