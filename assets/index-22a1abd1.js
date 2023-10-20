@@ -200,5 +200,8 @@ fill: ${e=>e.theme.mainFont};
       font-weight: 400;
       background-color: ${e=>e.theme.mainBcg};
       color: ${e=>e.theme.mainText};
+      &.close {
+        overflow: hidden;
+      }
     }
-`,f2=w.lazy(()=>ac(()=>import("./Home-6f9bea2a.js"),[])),d2=w.lazy(()=>ac(()=>import("./CatalogPage-a33cdd88.js"),[])),p2=w.lazy(()=>ac(()=>import("./FavouritePage-223e639d.js"),[]));function h2(){return N.jsxs(yw,{theme:u2,children:[N.jsx(c2,{}),N.jsx(ix,{children:N.jsxs(Jr,{path:"/",element:N.jsx(l2,{}),children:[N.jsx(Jr,{index:!0,element:N.jsx(f2,{})}),N.jsx(Jr,{path:"catalog",element:N.jsx(d2,{})}),N.jsx(Jr,{path:"favorites",element:N.jsx(p2,{})})]})})]})}Qa.createRoot(document.getElementById("root")).render(N.jsx(re.StrictMode,{children:N.jsx(fx,{basename:"/rental-test",children:N.jsx(h2,{})})}));export{y2 as A,bt as P,g2 as a,Wk as b,ot as d,N as j,w as r,Ne as s};
+`,f2=w.lazy(()=>ac(()=>import("./Home-d52c2547.js"),[])),d2=w.lazy(()=>ac(()=>import("./CatalogPage-3cf95f90.js"),[])),p2=w.lazy(()=>ac(()=>import("./FavouritePage-89c3585d.js"),[]));function h2(){return N.jsxs(yw,{theme:u2,children:[N.jsx(c2,{}),N.jsx(ix,{children:N.jsxs(Jr,{path:"/",element:N.jsx(l2,{}),children:[N.jsx(Jr,{index:!0,element:N.jsx(f2,{})}),N.jsx(Jr,{path:"catalog",element:N.jsx(d2,{})}),N.jsx(Jr,{path:"favorites",element:N.jsx(p2,{})})]})})]})}Qa.createRoot(document.getElementById("root")).render(N.jsx(re.StrictMode,{children:N.jsx(fx,{basename:"/rental-test",children:N.jsx(h2,{})})}));export{y2 as A,bt as P,g2 as a,Wk as b,$k as c,ot as d,N as j,_k as m,w as r,Ne as s};
