@@ -23,7 +23,6 @@ const CatalogPage = () => {
     }, [])
 
     const openModal = (e) => {
-        console.log(e.target);
         if (e.target.nodeName !== 'BUTTON') return;
         const id = e.target.closest('li').id;
         try {
