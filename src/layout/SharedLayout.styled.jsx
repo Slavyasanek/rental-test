@@ -23,9 +23,16 @@ export const SuspenseWrapper = styled.div`
     }
     @media screen and (${devices.desktop}){
         display: flex;
+        column-gap: 50px;
     }
 `
 
 export const Container = styled.div`
     width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    @media screen and (${devices.desktop}){
+        padding-top: 150px;
+        padding-bottom: 150px;
+    }
 `

@@ -20,17 +20,17 @@ export const SharedLayout = () => {
     return (
         <Wrapper>
             <LayoutWrapper>
-                <Container>
-                    {!isDesktop && <Header openMethod={openSideBar} />}
-                    <SuspenseWrapper>
-                        <AnimatePresence>
-                            {isOpenSideBar && <SideBar closeMethod={closeSideBar} />}
-                        </AnimatePresence>
+                {!isDesktop && <Header openMethod={openSideBar} />}
+                <SuspenseWrapper>
+                    <AnimatePresence>
+                        {isOpenSideBar && <SideBar closeMethod={closeSideBar} />}
+                    </AnimatePresence>
+                    <Container>
                         <Suspense>
                             <Outlet />
                         </Suspense>
-                    </SuspenseWrapper>
-                </Container>
+                    </Container>
+                </SuspenseWrapper>
             </LayoutWrapper>
         </Wrapper>
     )

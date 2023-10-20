@@ -1,6 +1,26 @@
+import { useEffect } from "react";
+import { useState } from "react";
+import { getCars } from "../../api/cars";
+import { CardList } from "../../components/CardList/CardList";
 const CatalogPage = () => {
+    const [cars, setCars] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const res = await getCars();
+                setCars(res)
+            } catch (error) {
+                return;
+            }
+        }
+        fetchData();
+        
+    }, [])
     return (
-        <h1>Catalog</h1>
+        <>
+        {cars && <CardList cars={cars}/>}
+        </>
     )
 }
 

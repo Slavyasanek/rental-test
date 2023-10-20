@@ -7,13 +7,14 @@ import { AiOutlineClose } from 'react-icons/ai'
 export const SideBarWrapper = styled(motion.div)`
     background-color: ${p => p.theme.oddBcg};
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     padding: 60px 20px;
+    z-index: 999;
     @media screen and (${devices.desktop}){
         position: sticky;
-        width: 160px;
+        width: 200px;
     }
 `
 
@@ -50,6 +51,7 @@ export const Nav = styled.ul`
     }
     @media screen and (${devices.desktop}) {
         margin-top: 50px;
+        gap: 30px;
     }
 `
 
