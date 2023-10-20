@@ -5,6 +5,7 @@ import { CardList } from "../../components/CardList/CardList";
 import { Modal } from "../../components/Modal/Modal";
 import { AnimatePresence } from "framer-motion";
 import { SkeletonList } from "../../components/SkeletonList/SkeletonList";
+import { Filter } from "../../components/Filter/Filter";
 
 const CatalogPage = () => {
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -45,6 +46,7 @@ const CatalogPage = () => {
     }
     return (
         <>
+        <Filter/>
             {isLoading ? <SkeletonList count={8}/> : (cars && <CardList cars={cars} onClick={openModal} />)}
             <AnimatePresence>
                 {isOpenModal && <Modal

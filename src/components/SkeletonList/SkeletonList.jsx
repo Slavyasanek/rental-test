@@ -1,4 +1,5 @@
 import { SkeletonWrapper, StyledSkeleton } from "./SkeletonList.styled";
+import PropTypes from "prop-types";
 
 export const SkeletonList = ({count}) => {
     return (
@@ -7,3 +8,7 @@ export const SkeletonList = ({count}) => {
         </SkeletonWrapper>
     )
 };
+
+SkeletonList.propTypes = {
+    count: PropTypes.number.isRequired
+}
