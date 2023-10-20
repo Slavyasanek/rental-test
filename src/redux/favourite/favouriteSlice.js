@@ -9,6 +9,7 @@ const favouriteSlice = createSlice({
     },
     reducers: {
         addToLike(state, action) {
+            if (state.likes.includes(action.payload)) return;
             state.likes.push(action.payload);
         },
         removeFromLike(state, action) {
