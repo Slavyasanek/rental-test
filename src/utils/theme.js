@@ -6,5 +6,6 @@ export const theme = Object.freeze({
     mainText: '#121417',
     oddText: '#8A8A89',
     oddBcg: '#F7F7FB',
-    greyText: 'rgba(18, 20, 23, 0.50)'
+    greyText: 'rgba(18, 20, 23, 0.50)',
+    lightGrey: '#363535'
 })

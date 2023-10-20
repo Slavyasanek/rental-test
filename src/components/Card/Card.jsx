@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
-import { CardBox, CardTitle, CardTitleOutline, CharacteristicBox, Image, ImageWrapper, Key, Keywords, LearnButton, LikeButton, LikeIconOutline, TitleWrapper } from "./Card.styled";
-import { nanoid } from "nanoid";
+import { CardBox, CardTitle, CardTitleOutline, CharacteristicBox, Image, ImageWrapper, LearnButton, LikeButton, LikeIconOutline, TitleWrapper } from "./Card.styled";
+import sample from '../../assets/car-sample.jpg'
+import { Characteristic } from "../Characteristic/Characteristic";
 
 export const Card = ({ id, year, make, model, type, img, functionalities, rentalPrice, rentalCompany, address }) => {
     const place = address.split(", ");
     return (
-        <CardBox>
+        <CardBox id={id}>
             <div>
             <ImageWrapper>
-                <Image src={img} />
+                <Image src={img ? img : sample} />
                 <LikeButton><LikeIconOutline /></LikeButton>
             </ImageWrapper>
             <CharacteristicBox>
@@ -16,17 +17,8 @@ export const Card = ({ id, year, make, model, type, img, functionalities, rental
                     <CardTitle>{make} <CardTitleOutline>{model}</CardTitleOutline>, {year}</CardTitle>
                     <CardTitle>{rentalPrice}</CardTitle>
                 </TitleWrapper>
-                <Keywords key={nanoid()}>
-                    <Key key={nanoid()}>{place[1]}</Key>
-                    <Key key={nanoid()}>{place[2]}</Key>
-                    <Key key={nanoid()}>{rentalCompany}</Key>
-                </Keywords>
-                <Keywords key={nanoid()}>
-                    <Key key={nanoid()}>{type}</Key>
-                    <Key key={nanoid()}>{model}</Key>
-                    <Key key={nanoid()}>{id}</Key>
-                    <Key key={nanoid()}>{functionalities[0]}</Key>
-                </Keywords>
+                <Characteristic items={[place[1], place[2], rentalCompany]}/>
+                <Characteristic items={[type, model, id, functionalities]}/>
             </CharacteristicBox>
             </div>
             <LearnButton>Learn more</LearnButton>

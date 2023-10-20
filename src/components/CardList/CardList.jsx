@@ -2,9 +2,9 @@ import { Card } from "../Card/Card";
 import PropTypes from "prop-types";
 import { List } from "./CardList.styled";
 import { nanoid } from "nanoid";
-export const CardList = ({ cars }) => {
+export const CardList = ({ cars, onClick }) => {
     return (
-        <List>
+        <List onClick={onClick}>
             {cars.map(({ id, year, make, model, type, img, functionalities, rentalPrice, rentalCompany, address}) =>
                 <Card
                     key={nanoid()}
@@ -23,5 +23,6 @@ export const CardList = ({ cars }) => {
 };
 
 CardList.propTypes = {
-    cars: PropTypes.array
+    cars: PropTypes.array,
+    onClick: PropTypes.func
 }
