@@ -39,7 +39,6 @@ const CatalogPage = () => {
             }
             return car;
         })
-
         if (res.length === 0) {
             return;
         } else {

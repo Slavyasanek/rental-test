@@ -1,5 +1,5 @@
 import { Dropdown } from "../Dropdown/Dropdown";
-import { FilterBox, FilterButton, InputWrapper, Label } from "./Filter.styled";
+import { FilterBox, FilterButton, InputWrapper, Label, SelectWrapper } from "./Filter.styled";
 import makes from '../../assets/makes.json';
 import { useState } from "react";
 import { nanoid } from "nanoid";
@@ -31,13 +31,12 @@ export const Filter = ({filterCars}) => {
     const handleFilter = () => {
         const filterCriteria = {
             make: make ? make.value.toLowerCase() : '',
-            price: price ? Number.parseInt(price.replace("$", "")) : '',
+            rentalPrice: price ? price.value : '',
             mileage: {
                 from: Number(from),
                 to: Number(to)
             }
         }
-        console.log(filterCriteria);
         filterCars(filterCriteria)
     }
 
@@ -46,7 +45,8 @@ export const Filter = ({filterCars}) => {
     const diapazoneId = nanoid();
     return (
         <FilterBox>
-            <div>
+           <SelectWrapper>
+           <div>
                 <Label htmlFor={makeSelectId}>Car brand</Label>
                 <Dropdown
                     options={makesArr}
@@ -65,8 +65,10 @@ export const Filter = ({filterCars}) => {
                 options={priceArr}
                 id={priceSelectId}
                 placeholder={`To $`}
+                isSearchable={true}
                 isClearable={true}/>
             </div>
+           </SelectWrapper>
             <div>
                 <Label htmlFor={diapazoneId}>Сar mileage / km</Label>
                 <InputWrapper>

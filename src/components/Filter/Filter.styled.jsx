@@ -5,10 +5,22 @@ export const FilterBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     gap: 6px;
     margin-bottom: 20px;
+    @media screen and (${devices.tablet}){
+        flex-direction: row;
+    }
     @media screen and (${devices.desktop}){
         margin-bottom: 50px;
+        gap: 18px;
+    }
+`
+export const SelectWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    @media screen and (${devices.desktop}){
         gap: 18px;
     }
 `
