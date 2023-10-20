@@ -6,5 +6,8 @@ export const GlobalStyle = createGlobalStyle`
       font-weight: 400;
       background-color: ${props => props.theme.mainBcg};
       color: ${props => props.theme.mainText};
+      &.close {
+        overflow: hidden;
+      }
     }
 `

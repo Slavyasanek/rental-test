@@ -21,15 +21,21 @@ export const ModalBox = styled.div`
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 40px;
     position: relative;
+    @media screen and (${devices.maxTablet}){
+        margin-top: 20px;
+    }
     @media screen and (${devices.tablet}){
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         padding: 20px;
+        max-width: 400px;
     }
     @media screen and (${devices.desktop}){
         padding: 40px;
         max-width: 540px;
-        margin-top: 150px;
     }
 `
 
@@ -60,6 +66,10 @@ export const CloseIcon = styled(AiOutlineClose)`
     }
 `
 
+export const InfoBlock = styled.div`
+    margin-bottom: 24px;
+`
+
 export const ImageWrapper = styled.div`
     border-radius: 14px;
     width: 100%;
@@ -80,7 +90,6 @@ export const Image = styled.img`
 
 export const Description = styled.p`
     line-height: 1.42;
-    margin-bottom: 24px;
     font-size: 12px;
     @media screen and (${devices.tablet}){
         font-size: 14px;
@@ -132,3 +141,19 @@ export const ConditionText = styled.p`
     }
 `
 
+export const ContactLnk = styled.a`
+    border-radius: 12px;
+    background-color: ${p => p.theme.decorativePurple};
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 50px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.42;
+    color: ${p => p.theme.mainBcg};
+    display: block;
+    cursor: pointer;
+    width: max-content;
+    &:hover, &:focus {
+        background-color: ${p => p.theme.decorativePurpleHover};
+    }
+`
