@@ -44,7 +44,7 @@ export const CloseIcon = styled(AiOutlineClose)`
 export const Nav = styled.ul`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     margin-top: 20px;
     @media screen and (${devices.tablet}) {
         margin-top: 40px;
@@ -54,13 +54,12 @@ export const Nav = styled.ul`
         gap: 30px;
     }
 `
-
 export const PageLink = styled(NavLink)`
     font-family: Manrope, sans-serif;
     font-weight: 500;
     border-radius: 8px;
-    padding: 8px 10px;
     font-size: 14px;
+    padding: 8px 10px;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
     color 250ms cubic-bezier(0.4, 0, 0.2, 1);
     &.active, &:hover, &:focus {
