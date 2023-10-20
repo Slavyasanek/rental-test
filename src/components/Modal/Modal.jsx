@@ -5,6 +5,12 @@ import { Characteristic } from "../Characteristic/Characteristic";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
 
+const backdropVars = {
+    initial: { opacity: 0 },
+    isOn: { opacity: 1, transition: { type: "spring", stiffness: 100, damping: 18 } },
+    exit: { opacity: 0, transition: { type: "spring", stiffness: 100, damping: 18 } }
+}
+
 export const Modal = ({ car, closeMethod }) => {
     const { id, year, make, model, type, img, description, fuelConsumption, engineSize, accessories, functionalities, rentalPrice, address, rentalConditions, mileage } = car;
     const place = address.split(", ");
@@ -29,7 +35,12 @@ export const Modal = ({ car, closeMethod }) => {
     }, [closeMethod])
 
     return (
-        <Backdrop onClick={closeBackdrop}>
+        <Backdrop 
+        onClick={closeBackdrop}
+        initial={"initial"}
+        animate={"isOn"}
+        exit={"exit"}
+        variants={backdropVars}>
             <ModalBox>
                 <CloseButton onClick={closeMethod}><CloseIcon /></CloseButton>
                 <ImageWrapper>

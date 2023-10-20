@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { getCars} from "../../api/cars";
+import { getCars } from "../../api/cars";
 import { CardList } from "../../components/CardList/CardList";
 import { Modal } from "../../components/Modal/Modal";
+import { AnimatePresence } from "framer-motion";
 
 const CatalogPage = () => {
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -18,7 +19,7 @@ const CatalogPage = () => {
                 return;
             }
         }
-        fetchData();       
+        fetchData();
     }, [])
 
     const openModal = (e) => {
@@ -31,7 +32,7 @@ const CatalogPage = () => {
             setIsOpenModal(true);
         } catch (error) {
             console.log(error);
-        } 
+        }
     }
 
     const closeModal = () => {
@@ -40,10 +41,12 @@ const CatalogPage = () => {
     }
     return (
         <>
-        {cars && <CardList cars={cars} onClick={openModal}/>}
-       {isOpenModal && <Modal 
-       closeMethod={closeModal}
-       car={currentCar}/>}
+            {cars && <CardList cars={cars} onClick={openModal} />}
+            <AnimatePresence>
+                {isOpenModal && <Modal
+                    closeMethod={closeModal}
+                    car={currentCar} />}
+            </AnimatePresence>
         </>
     )
 }

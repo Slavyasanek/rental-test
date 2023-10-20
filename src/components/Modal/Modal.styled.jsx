@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { devices } from "../../utils/devices";
 import { AiOutlineClose } from 'react-icons/ai';
+import { motion } from "framer-motion";
 
-export const Backdrop = styled.div`
+export const Backdrop = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
@@ -14,7 +15,7 @@ export const Backdrop = styled.div`
     background-color: ${p => p.theme.greyText};
 `
 
-export const ModalBox = styled.div`
+export const ModalBox = styled(motion.div)`
     background-color: ${p => p.theme.mainBcg};
     border-radius: 24px;
     padding: 14px;
