@@ -5,8 +5,9 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 import { generatePrice } from "../../utils/generatePrice";
 import { Input } from "../Input/Input";
+import PropTypes from "prop-types";
 
-export const Filter = () => {
+export const Filter = ({filterCars}) => {
     const makesArr = makes.map(i => ({ value: i, label: i }))
     const priceArr = generatePrice();
     const [make, setMake] = useState('');
@@ -27,6 +28,19 @@ export const Filter = () => {
         }
     }
     
+    const handleFilter = () => {
+        const filterCriteria = {
+            make: make ? make.value.toLowerCase() : '',
+            price: price ? Number.parseInt(price.replace("$", "")) : '',
+            mileage: {
+                from: Number(from),
+                to: Number(to)
+            }
+        }
+        console.log(filterCriteria);
+        filterCars(filterCriteria)
+    }
+
     const makeSelectId = nanoid();
     const priceSelectId = nanoid();
     const diapazoneId = nanoid();
@@ -40,7 +54,8 @@ export const Filter = () => {
                     isSearchable={true}
                     value={make}
                     onChange={setMake}
-                    id={makeSelectId} />
+                    id={makeSelectId} 
+                    isClearable={true}/>
             </div>
             <div>
                 <Label htmlFor={priceSelectId}>Price/1 hour</Label>
@@ -49,7 +64,8 @@ export const Filter = () => {
                 onChange={setPrice}
                 options={priceArr}
                 id={priceSelectId}
-                placeholder={`To $`}/>
+                placeholder={`To $`}
+                isClearable={true}/>
             </div>
             <div>
                 <Label htmlFor={diapazoneId}>Сar mileage / km</Label>
@@ -68,6 +84,10 @@ export const Filter = () => {
                 name={'to'}/>
                 </InputWrapper>
             </div>
-            <FilterButton type="button" id="search by categories">Search</FilterButton>
+            <FilterButton type="button" id="search by categories" onClick={handleFilter}>Search</FilterButton>
         </FilterBox>)
 };
+
+Filter.propTypes = {
+    filterCars: PropTypes.func.isRequired
+}

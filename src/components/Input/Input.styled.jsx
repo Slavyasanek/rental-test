@@ -5,7 +5,8 @@ const left = () => css`
     border-top-left-radius: 14px;
     border-bottom-left-radius: 14px;
     border-right: 1px solid rgba(138, 138, 137, 0.20);
-    padding: 14px 60px;
+    padding: 14px;
+    padding-left: 60px;
     &::before {
         content: 'From';
     }

@@ -4,7 +4,7 @@ import { Box, InputWrapper } from "./Input.styled";
 export const Input = ({ value, onChange, id, side, name }) => {
     return (
         <InputWrapper side={side}>
-            <Box type="text"
+            <Box type="number"
             value={value}
             onChange={onChange}
             id={id}
