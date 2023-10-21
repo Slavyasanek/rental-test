@@ -33,7 +33,14 @@ const CatalogPage = () => {
         fetchData();
     }, [])
 
-    const loadMore = () => setPage(prevState => prevState + 1);
+    const loadMore = () => {
+        if (filteredCars.length > page * 8) {
+            setPage(prevState => prevState + 1)
+        } else {
+            setPage(1);
+            window.scrollTo({top: 0, behavior: 'smooth'})
+        }
+    };
 
     const openModal = (e) => {
         if (e.target.nodeName !== 'BUTTON') return;
@@ -60,14 +67,13 @@ const CatalogPage = () => {
                 setPage={setPage} />
             {isLoading ? <SkeletonList count={8} />
                 : (filteredCars.length > 0 &&
-                    <ListWrapper
-                        $isShown={filteredCars.length > 8 && filteredCars.length > page * 8}>
+                    <ListWrapper>
                         <CardList
                             cars={filteredCars.slice(0, 8 * page)}
                             onClick={openModal} />
-                        {filteredCars.length > 8 && filteredCars.length > page * 8 &&
+                        {filteredCars.length > 8 &&
                             <LoadButton
-                                onClick={loadMore} />}
+                                onClick={loadMore}>{filteredCars.length > page * 8 ? 'Load more' : 'Hide'}</LoadButton>}
                     </ListWrapper>)}
             <AnimatePresence>
                 {isOpenModal && <Modal

@@ -50,19 +50,27 @@ const FavouritePage = () => {
         setCurrentCar(null)
     }
 
-    const loadMore = () => setPage(prevState => prevState + 1);
+    const loadMore = () => {
+        if (favouriteCars.length > page * 8) {
+            setPage(prevState => prevState + 1)
+        } else {
+            setPage(1);
+            window.scrollTo({top: 0, behavior: 'smooth'})
+        }
+    };
 
     return (
         <>
             <TitleWrapper><Title>Car Favourites</Title><Icon /></TitleWrapper>
             {isLoading ? <SkeletonList count={favourites.length} /> :
                 (favouriteCars.length > 0 ?
-                    <ListWrapper $isShown={favouriteCars.length > 8 && favouriteCars.length > page * 8}>
+                    <ListWrapper>
                         <CardList cars={favouriteCars.slice(0, 8 * page)}
                             onClick={openModal} />
-                        {favouriteCars.length > 8 && favouriteCars.length > page * 8 &&
+                        {favouriteCars.length > 8 &&
                             <LoadButton
-                                onClick={loadMore} />}
+                                onClick={loadMore}>
+                                    {favouriteCars.length > page * 8 ? 'Load more' : 'Hide'}</LoadButton>}
                     </ListWrapper>
                     : <EmptyNotification>Your favourites list is currently empty.</EmptyNotification>)}
             <AnimatePresence>
