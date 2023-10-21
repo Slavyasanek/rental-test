@@ -28,6 +28,7 @@ export const Container = styled.div`
     width: 100%;
     padding-top:30px;
     padding-bottom: 50px;
+    position: relative;
     @media screen and (${devices.desktop}){
         padding-top: 80px;
         padding-bottom: 80px;

@@ -60,6 +60,7 @@ const CatalogPage = () => {
     }
     return (
         <>
+            <h1 className="hidden">Catalog of cars</h1>
             <Filter
                 setFilteredCars={setFilteredCars}
                 cars={cars}
