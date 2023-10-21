@@ -7,18 +7,12 @@ const left = () => css`
     border-right: 1px solid rgba(138, 138, 137, 0.20);
     padding: 14px;
     padding-left: 60px;
-    &::before {
-        content: 'From';
-    }
 `
 
 const right = () => css`
     border-top-right-radius: 14px;
     border-bottom-right-radius: 14px;
     padding: 14px 40px;
-    &::before {
-        content: "To";
-    }
 `
 
 export const InputWrapper = styled.div`

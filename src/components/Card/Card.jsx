@@ -39,7 +39,7 @@ export const Card = ({ isLiked, id, year, make, model, type, img, functionalitie
                 <Characteristic items={[type, model, id, functionalities]}/>
             </CharacteristicBox>
             </div>
-            <LearnButton>Learn more</LearnButton>
+            <LearnButton type="button" id="learn more baout car">Learn more</LearnButton>
         </CardBox>
     )
 };

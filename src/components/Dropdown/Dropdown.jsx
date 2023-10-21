@@ -1,7 +1,9 @@
 import Select from 'react-select'
 import PropTypes from "prop-types";
+import { useTheme } from 'styled-components';
 
 export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, id, isClearable, name }) => {
+    const theme = useTheme();
     return (
         <Select
             options={options}
@@ -15,7 +17,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
             styles={{
                 control: (styles) => ({
                     ...styles,
-                    backgroundColor: '#F7F7FB',
+                    backgroundColor: `${theme.oddBcg}`,
                     height: '48px',
                     border: 'none',
                     borderRadius: '14px',
@@ -24,13 +26,13 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                 }),
                 input: (styles) => ({
                     ...styles,
-                    color: '#121417',
+                    color: `${theme.mainText}`,
                     fontWeight: 500,
                     lineHeight: 1.11,
                 }),
                 placeholder: (styles) => ({
                     ...styles,
-                    color: '#121417',
+                    color: `${theme.mainText}`,
                     fontWeight: 500,
                     lineHeight: 1.11,
                     fontSize: '14px',
@@ -40,7 +42,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                 }),
                 singleValue: (styles) => ({
                     ...styles,
-                    color: '#121417',
+                    color: `${theme.mainText}`,
                     fontWeight: 500,
                     lineHeight: 1.11,
                     fontSize: '14px',
@@ -56,7 +58,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                 }),
                 menuList: (styles) => ({
                     ...styles,
-                    color: 'rgba(18, 20, 23, 0.20)',
+                    color: `${theme.optionText}`,
                     fontSize: '16px',
                     '::-webkit-scrollbar': {
                         borderRadius: '12px',
@@ -65,7 +67,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                     },
                     '::-webkit-scrollbar-thumb': {
                         borderRadius: '10px',
-                        backgroundColor: 'rgba(18, 20, 23, 0.05)',
+                        backgroundColor: `${theme.oddBcg}`,
                         width: '6px'
                     }
                 }),
@@ -74,7 +76,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                     cursor: 'pointer',
                     padding: '4px',
                     ':hover': {
-                        backgroundColor: '#F7F7FB'
+                        backgroundColor: `${theme.oddBcg}`
                     }
                 }),
                 indicatorSeparator: () => ({
