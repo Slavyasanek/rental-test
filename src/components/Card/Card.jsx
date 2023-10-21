@@ -17,8 +17,8 @@ export const Card = ({ isLiked, id, year, make, model, type, img, functionalitie
         dispatch(removeFromLike(id));
     }
 
-    const handleError = () => {
-        console.log('error');
+    const handleError = ({currentTarget}) => {
+        currentTarget.src = sample;
     }
 
     return (

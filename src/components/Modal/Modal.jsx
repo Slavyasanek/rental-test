@@ -34,6 +34,10 @@ export const Modal = ({ car, closeMethod }) => {
         }
     }, [closeMethod])
 
+    const handleError = ({currentTarget}) => {
+        currentTarget.src = sample;
+    }
+
     return (
         <Backdrop 
         onClick={closeBackdrop}
@@ -44,7 +48,7 @@ export const Modal = ({ car, closeMethod }) => {
             <ModalBox>
                 <CloseButton onClick={closeMethod}><CloseIcon /></CloseButton>
                 <ImageWrapper>
-                    <Image src={img ? img : sample} />
+                    <Image src={img ? img : sample} onError={handleError}/>
                 </ImageWrapper>
                 <Title>{make} <span>{model}</span>, {year}</Title>
                 <Characteristic key={nanoid()} items={[place[1], place[2], `Id: ${id}`, `Year: ${year}`, `Type: ${type}`]} />
