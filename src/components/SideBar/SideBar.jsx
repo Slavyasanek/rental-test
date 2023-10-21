@@ -2,6 +2,7 @@ import { CloseButton, CloseIcon, Nav, PageLink, SideBarWrapper } from "./SideBar
 import PropTypes from "prop-types";
 import { Logo } from "../Logo/Logo";
 import { useEffect, useRef } from "react";
+
 const sideBarVars = {
     initial: { x: '100%', opacity: 0 },
     isOn: { x: '0%',opacity: 1, transition: { type: "spring", stiffness: 100, damping: 18 } },

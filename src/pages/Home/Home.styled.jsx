@@ -13,21 +13,24 @@ export const ImageWrapper = styled.div`
     }
 `
 
-export const Description = styled.p`
+export const Description = styled.div`
     font-size: 12px;
     line-height: 1.5;
     letter-spacing: -0.05px;
     text-align: center;
-    & > span, & > p > span  {
-        color: ${p => p.theme.decorativePurple};
-        font-weight: 500;
-    }
     @media screen and (${devices.tablet}) {
         font-size: 16px;
     }
     @media screen and (${devices.desktop}){
         font-size: 20px;
         min-width: 500px;
+    }
+`
+
+export const Paragraph = styled.p`
+    & > span {
+        color: ${p => p.theme.decorativePurple};
+        font-weight: 500;
     }
 `
 
