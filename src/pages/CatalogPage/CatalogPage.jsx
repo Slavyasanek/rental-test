@@ -53,11 +53,22 @@ const CatalogPage = () => {
     }
     return (
         <>
-            <Filter setFilteredCars={setFilteredCars} cars={cars} isLoading={isLoading} setPage={setPage}/>
-            {isLoading ? <SkeletonList count={8} /> 
-            : (filteredCars && 
-            <ListWrapper isShown={filteredCars.length > 8 && filteredCars.length > page*8}><CardList cars={filteredCars.slice(0, 8 * page)} onClick={openModal} />
-            {filteredCars.length > 8 && filteredCars.length > page*8 && <LoadButton onClick={loadMore}/>}</ListWrapper>)}
+            <Filter
+                setFilteredCars={setFilteredCars}
+                cars={cars}
+                isLoading={isLoading}
+                setPage={setPage} />
+            {isLoading ? <SkeletonList count={8} />
+                : (filteredCars.length > 0 &&
+                    <ListWrapper
+                        $isShown={filteredCars.length > 8 && filteredCars.length > page * 8}>
+                        <CardList
+                            cars={filteredCars.slice(0, 8 * page)}
+                            onClick={openModal} />
+                        {filteredCars.length > 8 && filteredCars.length > page * 8 &&
+                            <LoadButton
+                                onClick={loadMore} />}
+                    </ListWrapper>)}
             <AnimatePresence>
                 {isOpenModal && <Modal
                     closeMethod={closeModal}

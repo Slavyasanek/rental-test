@@ -57,7 +57,7 @@ const FavouritePage = () => {
             <TitleWrapper><Title>Car Favourites</Title><Icon /></TitleWrapper>
             {isLoading ? <SkeletonList count={favourites.length} /> :
                 (favouriteCars.length > 0 ?
-                    <ListWrapper isShown={favouriteCars.length > 8 && favouriteCars.length > page * 8}>
+                    <ListWrapper $isShown={favouriteCars.length > 8 && favouriteCars.length > page * 8}>
                         <CardList cars={favouriteCars.slice(0, 8 * page)}
                             onClick={openModal} />
                         {favouriteCars.length > 8 && favouriteCars.length > page * 8 &&
