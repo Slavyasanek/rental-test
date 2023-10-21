@@ -8,12 +8,14 @@ import { SkeletonList } from "../../components/SkeletonList/SkeletonList";
 import { Filter } from "../../components/Filter/Filter";
 import { LoadButton } from "../../components/LoadButton/LoadButton";
 import { ListWrapper } from "./CatalogPage.styled";
+import { Error } from "../../components/Error/Error";
 
 const CatalogPage = () => {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [cars, setCars] = useState([]);
     const [filteredCars, setFilteredCars] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
     const [currentCar, setCurrentCar] = useState(null);
     const [page, setPage] = useState(1);
 
@@ -24,8 +26,9 @@ const CatalogPage = () => {
                 const res = await getCars();
                 setCars(res);
                 setFilteredCars(res);
-            } catch (error) {
-                return;
+                setIsError(false);
+            } catch (e) {
+                setIsError(true);
             } finally {
                 setIsLoading(false);
             }
@@ -65,9 +68,11 @@ const CatalogPage = () => {
                 setFilteredCars={setFilteredCars}
                 cars={cars}
                 isLoading={isLoading}
+                isError={isError}
                 setPage={setPage} />
             {isLoading ? <SkeletonList count={8} />
-                : (filteredCars.length > 0 &&
+                : (isError ? <Error/> : 
+                (filteredCars.length > 0 &&
                     <ListWrapper>
                         <CardList
                             cars={filteredCars.slice(0, 8 * page)}
@@ -75,7 +80,7 @@ const CatalogPage = () => {
                         {filteredCars.length > 8 &&
                             <LoadButton
                                 onClick={loadMore}>{filteredCars.length > page * 8 ? 'Load more' : 'Hide'}</LoadButton>}
-                    </ListWrapper>)}
+                    </ListWrapper>))}
             <AnimatePresence>
                 {isOpenModal && <Modal
                     closeMethod={closeModal}

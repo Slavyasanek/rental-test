@@ -58,6 +58,10 @@ export const FilterButton = styled.button`
     &:hover, &:focus {
         background-color: ${p => p.theme.decorativePurpleHover};
     }
+    &:disabled {
+        background-color: ${p => p.theme.oddText};
+        cursor: auto;
+    }
     @media screen and (${devices.tablet}){
         align-self: flex-end;
     }

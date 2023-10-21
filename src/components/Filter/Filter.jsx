@@ -6,10 +6,10 @@ import { nanoid } from "nanoid";
 import { generatePrice } from "../../utils/generatePrice";
 import { Input } from "../Input/Input";
 import PropTypes from "prop-types";
+import { checkCoincidences } from "../../utils/checkCoincidenсes";
 import toast from "react-hot-toast";
-import {BiSearchAlt} from 'react-icons/bi';
 
-export const Filter = ({ setFilteredCars, cars, isLoading, setPage }) => {
+export const Filter = ({ setFilteredCars, cars, isLoading, setPage, isError }) => {
     const makesArr = makes.map(i => ({ value: i, label: i }))
     const priceArr = generatePrice();
     const [make, setMake] = useState('');
@@ -30,7 +30,6 @@ export const Filter = ({ setFilteredCars, cars, isLoading, setPage }) => {
         }
     }
 
-
     const filterCars = () => {
         const filterCriteria = {
             make: make ? make.value.toLowerCase() : '',
@@ -40,40 +39,15 @@ export const Filter = ({ setFilteredCars, cars, isLoading, setPage }) => {
                 to: Number(to)
             }
         }
-        const res = cars.filter(car => {
-            for (const key in filterCriteria) {
-                if (key === 'mileage' && filterCriteria[key]) {
-                    const { to, from } = filterCriteria.mileage;
-                    if (from !== 0 && from > car[key]) {
-                        return false;
-                    }
-                    if (to !== 0 && to < car[key]) {
-                        return false;
-                    }
-                    if ((from > car[key] && to < car[key])) {
-                        return false;
-                    }
-                } else if (key === 'rentalPrice' && filterCriteria[key]) {
-                    if (filterCriteria.rentalPrice <= Number.parseInt(car[key].replace("$", ""))) {
-                        return false;
-                    }
-                } else if (filterCriteria[key] && car[key].toLowerCase() !== filterCriteria[key].toLowerCase()) {
-                    return false;
-                }
-            }
-            return car;
-        })
+        const res = checkCoincidences(cars, filterCriteria);
         if (res.length === 0) {
-            toast('Nothing was found for your request', {
-                style: {
-                    borderRadius: '14px',
-                    backgroundColor: '#0B44CD',
-                    color: '#ffffff'
-                },
-                icon: <BiSearchAlt color="#ffffff" size={18}/>
-            })
+            toast.success('Nothing was found for your request');
+            setFilteredCars(cars);
             return;
         } else {
+            let message;
+            message = res.length > 1 ? `We found ${res.length} cars according to your criterias` : `We found ${res.length} car according to your criterias`;
+            toast.success(message)
             setPage(1);
             setFilteredCars(res);
         }
@@ -126,13 +100,16 @@ export const Filter = ({ setFilteredCars, cars, isLoading, setPage }) => {
                         name={'to'} />
                 </InputWrapper>
             </div>
-            <FilterButton type="button" id="search by categories" onClick={filterCars} disabled={isLoading && true}>Search</FilterButton>
+            <FilterButton type="button" id="search by categories"
+                onClick={filterCars}
+                disabled={isLoading || isError && true}>Search</FilterButton>
         </FilterBox>)
 };
 
 Filter.propTypes = {
     setFilteredCars: PropTypes.func.isRequired,
     cars: PropTypes.arrayOf(PropTypes.shape),
-    isLoading: PropTypes.bool,
-    setPage: PropTypes.func
+    isLoading: PropTypes.bool.isRequired,
+    setPage: PropTypes.func,
+    isError: PropTypes.bool.isRequired
 }

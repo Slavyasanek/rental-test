@@ -9,14 +9,17 @@ import { Modal } from "../../components/Modal/Modal";
 import { EmptyNotification, Icon, Title, TitleWrapper } from "./FavouritePage.styled";
 import { ListWrapper } from "../CatalogPage/CatalogPage.styled";
 import { LoadButton } from "../../components/LoadButton/LoadButton";
+import { Error } from "../../components/Error/Error";
 
 const FavouritePage = () => {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [favouriteCars, setFavouriteCars] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
     const favourites = useSelector(selectFavourites);
     const [currentCar, setCurrentCar] = useState(null);
     const [page, setPage] = useState(1);
+
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true)
@@ -24,8 +27,8 @@ const FavouritePage = () => {
                 const res = await getCars();
                 const favouritesArr = res.filter(car => favourites.includes(car.id));
                 setFavouriteCars(favouritesArr)
-            } catch (error) {
-                return;
+            } catch (e) {
+                setIsError(true);
             } finally {
                 setIsLoading(false)
             }
@@ -63,6 +66,7 @@ const FavouritePage = () => {
         <>
             <TitleWrapper><Title>Car Favourites</Title><Icon /></TitleWrapper>
             {isLoading ? <SkeletonList count={favourites.length} /> :
+                isError ? <Error/> :
                 (favouriteCars.length > 0 ?
                     <ListWrapper>
                         <CardList cars={favouriteCars.slice(0, 8 * page)}
