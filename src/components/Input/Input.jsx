@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import { Box, InputWrapper } from "./Input.styled";
 
-export const Input = ({ value, onChange, id, side, name }) => {
+export const Input = ({ value, onChange, id, name }) => {
     return (
-        <InputWrapper side={side}>
+        <InputWrapper name={name}>
             <Box type="number"
             value={value}
             onChange={onChange}

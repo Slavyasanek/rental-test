@@ -17,11 +17,15 @@ export const Card = ({ isLiked, id, year, make, model, type, img, functionalitie
         dispatch(removeFromLike(id));
     }
 
+    const handleError = () => {
+        console.log('error');
+    }
+
     return (
         <CardBox id={id}>
             <div>
             <ImageWrapper>
-                <Image src={img ? img : sample} />
+                <Image src={img ? img : sample} onError={handleError}/>
                 {isLiked ? 
                     <LikeButton onClick={dislike}><LikeIconFilled/></LikeButton>
                     : <LikeButton onClick={like}><LikeIconOutline /></LikeButton>}

@@ -6,7 +6,7 @@ export const FilterBox = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
     margin-bottom: 20px;
     @media screen and (${devices.tablet}){
         flex-direction: row;
@@ -27,10 +27,13 @@ export const SelectWrapper = styled.div`
 
 export const Label = styled.label`
     color: ${p => p.theme.oddText};
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 500;
     line-height: 1.42;
     margin-bottom: 8px;
+    @media screen and (${devices.tablet}) {
+        font-size: 14px;
+    }
 `
 
 export const InputWrapper = styled.div`
@@ -51,8 +54,11 @@ export const FilterButton = styled.button`
     height: 48px;
     cursor: pointer;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    align-self: flex-end;
+    align-self: center;
     &:hover, &:focus {
         background-color: ${p => p.theme.decorativePurpleHover};
+    }
+    @media screen and (${devices.tablet}){
+        align-self: flex-end;
     }
 `

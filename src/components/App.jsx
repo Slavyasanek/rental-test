@@ -4,6 +4,7 @@ import { lazy } from "react"
 import { ThemeProvider } from "styled-components";
 import { theme } from "../utils/theme";
 import { GlobalStyle } from "../utils/GlobalStyle.styled";
+import { Toaster } from "react-hot-toast";
 
 const Home = lazy(() => import('../pages/Home/Home'));
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
@@ -13,6 +14,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle/>
+      <Toaster position="top-center"/>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

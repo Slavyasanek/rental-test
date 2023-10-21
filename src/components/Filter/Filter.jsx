@@ -6,8 +6,10 @@ import { nanoid } from "nanoid";
 import { generatePrice } from "../../utils/generatePrice";
 import { Input } from "../Input/Input";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
+import {BiSearchAlt} from 'react-icons/bi';
 
-export const Filter = ({filterCars}) => {
+export const Filter = ({ setFilteredCars, cars, isLoading, setPage }) => {
     const makesArr = makes.map(i => ({ value: i, label: i }))
     const priceArr = generatePrice();
     const [make, setMake] = useState('');
@@ -15,7 +17,7 @@ export const Filter = ({filterCars}) => {
     const [to, setTo] = useState('');
     const [from, setFrom] = useState('')
 
-    const handleChange = e =>{
+    const handleChange = e => {
         switch (e.target.name) {
             case 'to':
                 setTo(e.target.value);
@@ -27,8 +29,9 @@ export const Filter = ({filterCars}) => {
                 return;
         }
     }
-    
-    const handleFilter = () => {
+
+
+    const filterCars = () => {
         const filterCriteria = {
             make: make ? make.value.toLowerCase() : '',
             rentalPrice: price ? price.value : '',
@@ -37,59 +40,99 @@ export const Filter = ({filterCars}) => {
                 to: Number(to)
             }
         }
-        filterCars(filterCriteria)
+        const res = cars.filter(car => {
+            for (const key in filterCriteria) {
+                if (key === 'mileage' && filterCriteria[key]) {
+                    const { to, from } = filterCriteria.mileage;
+                    if (from !== 0 && from > car[key]) {
+                        return false;
+                    }
+                    if (to !== 0 && to < car[key]) {
+                        return false;
+                    }
+                    if ((from > car[key] && to < car[key])) {
+                        return false;
+                    }
+                } else if (key === 'rentalPrice' && filterCriteria[key]) {
+                    if (filterCriteria.rentalPrice <= Number.parseInt(car[key].replace("$", ""))) {
+                        return false;
+                    }
+                } else if (filterCriteria[key] && car[key].toLowerCase() !== filterCriteria[key].toLowerCase()) {
+                    return false;
+                }
+            }
+            return car;
+        })
+        if (res.length === 0) {
+            toast('Nothing was found for your request', {
+                style: {
+                    borderRadius: '14px',
+                    backgroundColor: '#0B44CD',
+                    color: '#ffffff'
+                },
+                icon: <BiSearchAlt color="#ffffff" size={18}/>
+            })
+            return;
+        } else {
+            setPage(1);
+            setFilteredCars(res);
+        }
     }
+
 
     const makeSelectId = nanoid();
     const priceSelectId = nanoid();
     const diapazoneId = nanoid();
     return (
         <FilterBox>
-           <SelectWrapper>
-           <div>
-                <Label htmlFor={makeSelectId}>Car brand</Label>
-                <Dropdown
-                    options={makesArr}
-                    placeholder={'Enter the text'}
-                    isSearchable={true}
-                    value={make}
-                    onChange={setMake}
-                    id={makeSelectId} 
-                    isClearable={true}/>
-            </div>
+            <SelectWrapper>
+                <div>
+                    <Label htmlFor={makeSelectId}>Car brand</Label>
+                    <Dropdown
+                        options={makesArr}
+                        placeholder={'Enter the text'}
+                        isSearchable={true}
+                        value={make}
+                        onChange={setMake}
+                        id={makeSelectId}
+                        isClearable={true}
+                        name="make" />
+                </div>
+                <div>
+                    <Label htmlFor={priceSelectId}>Price&#47;1 hour</Label>
+                    <Dropdown
+                        value={price}
+                        onChange={setPrice}
+                        options={priceArr}
+                        id={priceSelectId}
+                        placeholder={`To $`}
+                        isSearchable={true}
+                        isClearable={true}
+                        name="price" />
+                </div>
+            </SelectWrapper>
             <div>
-                <Label htmlFor={priceSelectId}>Price/1 hour</Label>
-                <Dropdown
-                value={price}
-                onChange={setPrice}
-                options={priceArr}
-                id={priceSelectId}
-                placeholder={`To $`}
-                isSearchable={true}
-                isClearable={true}/>
-            </div>
-           </SelectWrapper>
-            <div>
-                <Label htmlFor={diapazoneId}>Сar mileage / km</Label>
+                <Label htmlFor={diapazoneId}>Сar mileage &#47; km</Label>
                 <InputWrapper>
-                <Input
-                value={from}
-                onChange={handleChange}
-                id={diapazoneId}
-                side={'left'}
-                name={'from'}
-                />
-                <Input
-                value={to}
-                onChange={handleChange}
-                side={'right'}
-                name={'to'}/>
+                    <Input
+                        value={from}
+                        onChange={handleChange}
+                        id={diapazoneId}
+                        name={'from'}
+                    />
+                    <Input
+                        value={to}
+                        onChange={handleChange}
+                        name={'to'} />
                 </InputWrapper>
             </div>
-            <FilterButton type="button" id="search by categories" onClick={handleFilter}>Search</FilterButton>
+            <FilterButton type="button" id="search by categories" onClick={filterCars} disabled={isLoading && true}>Search</FilterButton>
         </FilterBox>)
 };
 
 Filter.propTypes = {
-    filterCars: PropTypes.func.isRequired
+    setFilteredCars: PropTypes.func.isRequired,
+    cars: PropTypes.arrayOf(PropTypes.shape),
+    isLoading: PropTypes.bool,
+    setPage: PropTypes.func
 }

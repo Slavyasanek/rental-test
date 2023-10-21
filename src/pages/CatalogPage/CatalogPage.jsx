@@ -6,45 +6,16 @@ import { Modal } from "../../components/Modal/Modal";
 import { AnimatePresence } from "framer-motion";
 import { SkeletonList } from "../../components/SkeletonList/SkeletonList";
 import { Filter } from "../../components/Filter/Filter";
+import { LoadButton } from "../../components/LoadButton/LoadButton";
+import { ListWrapper } from "./CatalogPage.styled";
 
 const CatalogPage = () => {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [cars, setCars] = useState([]);
     const [filteredCars, setFilteredCars] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [currentCar, setCurrentCar] = useState(null)
-
-    const filterCars = (filterCriteria) => {
-        const res = cars.filter(car => {
-            for (const key in filterCriteria) {
-                if (key === 'mileage' && filterCriteria[key]) {
-                    const { to, from } = filterCriteria.mileage;
-                    if (from !== 0 && from > car[key]) {
-                        return false;
-                    }
-                    if (to !== 0 && to < car[key]) {
-                        return false;
-                    }
-                    if ((from > car[key] && to < car[key])) {
-                        console.log(from > car[key] && to < car[key]);
-                        return false;
-                    }
-                } else if (key === 'rentalPrice' && filterCriteria[key]) {
-                    if (filterCriteria.rentalPrice <= Number.parseInt(car[key].replace("$", ""))) {
-                        return false;
-                    }
-                } else if (filterCriteria[key] && car[key].toLowerCase() !== filterCriteria[key].toLowerCase()) {
-                    return false;
-                }
-            }
-            return car;
-        })
-        if (res.length === 0) {
-            return;
-        } else {
-            setFilteredCars(res);
-        }
-    }
+    const [currentCar, setCurrentCar] = useState(null);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         async function fetchData() {
@@ -62,6 +33,8 @@ const CatalogPage = () => {
         fetchData();
     }, [])
 
+    const loadMore = () => setPage(prevState => prevState + 1);
+
     const openModal = (e) => {
         if (e.target.nodeName !== 'BUTTON') return;
         const id = e.target.closest('li').id;
@@ -70,7 +43,7 @@ const CatalogPage = () => {
             setCurrentCar(res);
             setIsOpenModal(true);
         } catch (error) {
-            console.log(error);
+            return;
         }
     }
 
@@ -80,8 +53,11 @@ const CatalogPage = () => {
     }
     return (
         <>
-            <Filter filterCars={filterCars} />
-            {isLoading ? <SkeletonList count={8} /> : (cars && <CardList cars={filteredCars} onClick={openModal} />)}
+            <Filter setFilteredCars={setFilteredCars} cars={cars} isLoading={isLoading} setPage={setPage}/>
+            {isLoading ? <SkeletonList count={8} /> 
+            : (filteredCars && 
+            <ListWrapper isShown={filteredCars.length > 8 && filteredCars.length > page*8}><CardList cars={filteredCars.slice(0, 8 * page)} onClick={openModal} />
+            {filteredCars.length > 8 && filteredCars.length > page*8 && <LoadButton onClick={loadMore}/>}</ListWrapper>)}
             <AnimatePresence>
                 {isOpenModal && <Modal
                     closeMethod={closeModal}

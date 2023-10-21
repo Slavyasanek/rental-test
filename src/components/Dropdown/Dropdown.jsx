@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import PropTypes from "prop-types";
 
-export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, id, isClearable }) => {
+export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, id, isClearable, name }) => {
     return (
         <Select
             options={options}
@@ -11,6 +11,7 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
             value={value}
             id={id}
             isClearable={isClearable}
+            name={name}
             styles={{
                 control: (styles) => ({
                     ...styles,
@@ -18,7 +19,8 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                     height: '48px',
                     border: 'none',
                     borderRadius: '14px',
-                    minWidth: 'max-content'
+                    minWidth: 'max-content',
+                    boxShadow: 'none'
                 }),
                 input: (styles) => ({
                     ...styles,
@@ -31,12 +33,20 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                     color: '#121417',
                     fontWeight: 500,
                     lineHeight: 1.11,
+                    fontSize: '14px',
+                    '@media screen and (min-width: 1440px)': {
+                        fontSize: '18px',
+                    }
                 }),
                 singleValue: (styles) => ({
                     ...styles,
                     color: '#121417',
                     fontWeight: 500,
                     lineHeight: 1.11,
+                    fontSize: '14px',
+                    '@media screen and (min-width: 1440px)': {
+                        fontSize: '18px',
+                    }
                 }),
                 menu: (styles) => ({
                     ...styles,
@@ -48,7 +58,6 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                     ...styles,
                     color: 'rgba(18, 20, 23, 0.20)',
                     fontSize: '16px',
-                    gap: '8px',
                     '::-webkit-scrollbar': {
                         borderRadius: '12px',
                         width: '6px',
@@ -62,8 +71,8 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                 }),
                 option: (styles) => ({
                     ...styles,
-                    padding: 0,
                     cursor: 'pointer',
+                    padding: '4px',
                     ':hover': {
                         backgroundColor: '#F7F7FB'
                     }
@@ -71,12 +80,14 @@ export const Dropdown = ({ placeholder, options, isSearchable, value, onChange, 
                 indicatorSeparator: () => ({
                     display: 'none'
                 }),
-                dropdownIndicator: (styles) => ({
+                dropdownIndicator: (styles, state) => ({
                     ...styles,
                     cursor: 'pointer',
                     '> svg': {
                         fill: 'black'
-                    }
+                    },
+                    transition: 'transform 250ms cubic-bezier(0.4, 0, 0.2, 1)',
+                    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : null,
                 })
             }}
         />
@@ -90,5 +101,6 @@ Dropdown.propTypes = {
     value: PropTypes.any,
     onChange: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
-    isClearable: PropTypes.bool.isRequired
+    isClearable: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired
 }

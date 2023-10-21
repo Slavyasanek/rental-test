@@ -35,9 +35,9 @@ export const InputWrapper = styled.div`
         font-size: 18px;
     }
         ${p => {
-            if (p.side === 'left') {
+            if (p.name === 'from') {
                 return `content: "From"`;
-            } else {
+            } else if (p.name === 'to'){
                 return `content: "To"`;
             }
         }}
