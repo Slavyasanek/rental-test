@@ -40,6 +40,10 @@ export const ModalBox = styled(motion.div)`
     }
 `
 
+export const CharacteristicWrapper = styled.div`
+    margin-bottom: 14px;
+`
+
 export const CloseButton = styled.button`
     background-color: transparent;
     border: none;

@@ -1,9 +1,10 @@
-import { Backdrop, CloseButton, CloseIcon, ConditionItem, ConditionText, Conditions, ContactLnk, Description, Image, ImageWrapper, InfoBlock, ModalBox, Subtitle, Title } from "./Modal.styled";
+import { Backdrop, CharacteristicWrapper, CloseButton, CloseIcon, ConditionItem, ConditionText, Conditions, ContactLnk, Description, Image, ImageWrapper, InfoBlock, ModalBox, Subtitle, Title } from "./Modal.styled";
 import sample from '../../assets/car-sample.jpg'
 import PropTypes from "prop-types";
 import { Characteristic } from "../Characteristic/Characteristic";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
+import { findAge } from "../../utils/findAge";
 
 const backdropVars = {
     initial: { opacity: 0 },
@@ -14,9 +15,8 @@ const backdropVars = {
 export const Modal = ({ car, closeMethod }) => {
     const { id, year, make, model, type, img, description, fuelConsumption, engineSize, accessories, functionalities, rentalPrice, address, rentalConditions, mileage } = car;
     const place = address.split(", ");
-
-    const conditionsArr = rentalConditions.split('\n')
-
+    const {array, age} = findAge(rentalConditions);
+    
     const closeBackdrop = e => {
         if (e.target === e.currentTarget) {
             closeMethod();
@@ -34,25 +34,27 @@ export const Modal = ({ car, closeMethod }) => {
         }
     }, [closeMethod])
 
-    const handleError = ({currentTarget}) => {
+    const handleError = ({ currentTarget }) => {
         currentTarget.src = sample;
     }
 
     return (
-        <Backdrop 
-        onClick={closeBackdrop}
-        initial={"initial"}
-        animate={"isOn"}
-        exit={"exit"}
-        variants={backdropVars}>
+        <Backdrop
+            onClick={closeBackdrop}
+            initial={"initial"}
+            animate={"isOn"}
+            exit={"exit"}
+            variants={backdropVars}>
             <ModalBox>
                 <CloseButton onClick={closeMethod}><CloseIcon /></CloseButton>
                 <ImageWrapper>
-                    <Image src={img ? img : sample} onError={handleError}/>
+                    <Image src={img ? img : sample} onError={handleError} />
                 </ImageWrapper>
                 <Title>{make} <span>{model}</span>, {year}</Title>
-                <Characteristic key={nanoid()} items={[place[1], place[2], `Id: ${id}`, `Year: ${year}`, `Type: ${type}`]} />
-                <Characteristic key={nanoid()} items={[`Fuel Consumption: ${fuelConsumption}`, `Engine Size: ${engineSize}`]} />
+                <CharacteristicWrapper>
+                    <Characteristic key={nanoid()} items={[place[1], place[2], `Id: ${id}`, `Year: ${year}`, `Type: ${type}`]} />
+                    <Characteristic key={nanoid()} items={[`Fuel Consumption: ${fuelConsumption}`, `Engine Size: ${engineSize}`]} />
+                </CharacteristicWrapper>
                 {description &&
                     <InfoBlock>
                         <Description>{description}</Description>
@@ -64,10 +66,11 @@ export const Modal = ({ car, closeMethod }) => {
                         {accessories && <Characteristic key={nanoid()} items={accessories} />}
                     </InfoBlock>}
                 <Subtitle>Rental Conditions:</Subtitle>
-                {(conditionsArr.length > 0 || mileage || rentalPrice) && (
+                {(array.length > 0 || age || mileage || rentalPrice) && (
                     <InfoBlock>
                         <Conditions>
-                            {conditionsArr.map(item => (<ConditionItem key={nanoid()}><ConditionText>{item}</ConditionText></ConditionItem>))}
+                            {age && <ConditionItem><ConditionText>Minimum age: <span>{age}</span></ConditionText></ConditionItem>}
+                            {array.map(item => (<ConditionItem key={nanoid()}><ConditionText>{item}</ConditionText></ConditionItem>))}
                             {mileage && <ConditionItem><ConditionText>Mileage: <span>{mileage.toLocaleString('en-US')}</span></ConditionText></ConditionItem>}
                             {rentalPrice && <ConditionItem><ConditionText>Price: <span>{rentalPrice}</span></ConditionText></ConditionItem>}
                         </Conditions>
