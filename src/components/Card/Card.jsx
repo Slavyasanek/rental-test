@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { CardBox, CardTitle, CardTitleOutline, CharacteristicBox, Image, ImageWrapper, LearnButton, LikeButton, LikeIconFilled, LikeIconOutline, TitleWrapper } from "./Card.styled";
+import { CardBox, CardTitle, CardTitleOutline, CharacteristicBox, GradientOverlay, Image, ImageWrapper, LearnButton, LikeButton, LikeIconFilled, LikeIconOutline, TitleWrapper } from "./Card.styled";
 import sample from '../../assets/car-sample.jpg'
 import { Characteristic } from "../Characteristic/Characteristic";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,7 @@ export const Card = ({ isLiked, id, year, make, model, type, img, functionalitie
             <div>
             <ImageWrapper>
                 <Image src={img ? img : sample} onError={handleError}/>
+                <GradientOverlay/>
                 {isLiked ? 
                     <LikeButton onClick={dislike}><LikeIconFilled/></LikeButton>
                     : <LikeButton onClick={like}><LikeIconOutline /></LikeButton>}

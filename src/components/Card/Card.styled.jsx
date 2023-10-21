@@ -32,6 +32,18 @@ border-radius: 14px;
 }
 `
 
+
+export const GradientOverlay = styled.div`
+    background: linear-gradient(180deg, rgba(18, 20, 23, 0.50) 2.5%, rgba(18, 20, 23, 0.00) 41.07%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+`
+
 export const Image = styled.img`
 display: block;
 width: 100%;
