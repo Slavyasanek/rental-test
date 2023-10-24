@@ -2,7 +2,7 @@ import { CloseButton, CloseIcon, Nav, PageLink, SideBarWrapper } from "./SideBar
 import PropTypes from "prop-types";
 import { Logo } from "../Logo/Logo";
 import { useEffect, useRef } from "react";
-
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 const sideBarVars = {
     initial: { x: '100%', opacity: 0 },
     isOn: { x: '0%',opacity: 1, transition: { type: "spring", stiffness: 100, damping: 18 } },
@@ -11,6 +11,8 @@ const sideBarVars = {
 
 export const SideBar = ({ closeMethod, openBtnRef, isOpen }) => {
     const sideBarRef = useRef(null);
+    const isDesktop = useMediaQuery('(min-width: 1440px)');
+
     useEffect(() => {
         const closeOnEsc = e => {
             if (e.code === 'Escape') closeMethod();
@@ -27,11 +29,15 @@ export const SideBar = ({ closeMethod, openBtnRef, isOpen }) => {
             window.addEventListener("click", closeOnClickOutside);
             window.addEventListener("keydown", closeOnEsc);
         }
+        if (isDesktop) {
+            window.removeEventListener("click", closeOnClickOutside);
+            window.removeEventListener("keydown", closeOnEsc);
+        }
         return () => {
             window.removeEventListener("click", closeOnClickOutside);
-            window.removeEventListener("keydown", closeOnEsc)
+            window.removeEventListener("keydown", closeOnEsc);
         }
-    }, [closeMethod, openBtnRef])
+    }, [closeMethod, openBtnRef, isDesktop])
 
     return (
         <SideBarWrapper

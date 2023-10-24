@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { devices } from "../../utils/devices";
 import { AiOutlineClose } from 'react-icons/ai'
 
-export const SideBarWrapper = styled(motion.div)`
+export const SideBarWrapper = styled(motion.aside)`
     background-color: ${p => p.theme.oddBcg};
     height: 100vh;
     position: fixed;
